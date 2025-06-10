@@ -1,0 +1,68 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+struct data{
+    char nama[50];
+    string npm; 
+};
+
+class Matkul{
+public:
+    char n[50];
+    int sks;
+    
+    void matakuliah(){
+        cout << "Masukan matakuliah: ";
+        cin.getline(n, 50);
+        cout << "Masukan SKS: ";
+        cin >> sks;
+        
+        cout << "\n=== Data Matkul ===\n";
+        cout << "Mata kuliah : " << n << endl;
+        cout << "Jumlah SKS : " << sks << endl;
+    }
+    
+
+void menu(){
+    int pilih;
+    
+    cout << "=== Sistem Informasi Mahasiswa ===" << endl;
+    cout << "1. Daftar" << endl;
+    cout << "2. Tambahkan mata kuliah";
+    cout << "\nPilih : ";
+    cin >> pilih;
+    cin.ignore();
+    
+    if (pilih == 1){
+    data a;
+    
+    cout << "Masukan nama : ";
+    cin.getline(a.nama, 50);
+    
+    cout << "Masukan NPM : ";
+    cin >> a.npm;
+    
+    cout << "\n~~~ Data Mahasiswa ~~~\n" << endl;
+    cout << "Nama: " << a.nama << endl;
+    cout << "NPM: " << a.npm << endl;
+    }else if (pilih == 2){
+        matakuliah();
+        
+    
+    }else{
+        cout << "eror"<< endl;
+    }
+    
+   }
+};
+
+
+
+int main (){
+    Matkul a;
+    a.menu();
+    
+    return 0;
+    
+}
