@@ -1,107 +1,99 @@
 #include <iostream>
-#include <cstring>
+#include <vector>   
+#include <cstring> // ini sbnrnya gpke jg masi bisa gt loh codingannya, kek nya,  tpi gktau basing lorang
 using namespace std;
 
-struct data{
+struct data {
     char nama[50];
-    string npm; 
+    string npm;
 };
 
-class Matkul{
+class Matkul {
 public:
     char n[50];
     int sks;
-    
-    void matakuliah(){
+
+    void matakuliah() {
         cout << "Masukan matakuliah: ";
         cin.getline(n, 50);
         cout << "Masukan SKS: ";
         cin >> sks;
         cin.ignore();
-        
+
         cout << "\n--- Data Matkul ---\n";
         cout << "Mata kuliah : " << n << endl;
         cout << "Jumlah SKS : " << sks << endl;
     }
-    
 
-void menu(){
-    int pilih;
-    const int maks = 10; // tadi nya kan cuma bisa nyimpen 1 data nah kalo pake ini jadi bisa nyimpen banyak data, tp maksimal 10
-        data daftarMhs[maks]; // utk nyimpen bnyk mahasiswa
-        char daftarMatkul[maks][50]; // utk bnyk matkul
-        int daftarSKS[maks]; // utk bnyk sks
-        int jumlahMhs = 0; // utk tau brp bnyk data di masukkan
-        int jumlahMatkul = 0; // ini jg sma
+    void menu() {
+        int pilih;
+        vector<data> daftarMhs;            
+        vector<string> daftarMatkul;        
+        vector<int> daftarSKS;  
+        //pake vector biar gampang nyimpen data banyak. ya gaksih. gak ya
         
-    while(true){
-        
-        cout << "\n=== Sistem Informasi Mahasiswa ===" << endl;
-        cout << "1. Daftar" << endl;
-        cout << "2. Tambahkan mata kuliah" << endl;
-        cout << "3. Tampilkan semua data" << endl;
-        cout << "4. Keluar" << endl;
-        cout << "Pilih : ";
-        cin >> pilih;
-        cin.ignore();
-    
-        if (pilih == 1){
-            if (jumlahMhs < maks) {
-                cout << "Masukan nama : ";
-                cin.getline(daftarMhs[jumlahMhs].nama, 50); // utk ngebaca input nama mahasiswa sm nyimpen array ke daftarMhs. pke getline biar bisa baca kalimat penuh
-
-    
-                cout << "Masukan npm : ";
-                cin >> daftarMhs[jumlahMhs].npm;
-                cin.ignore();
-    
-    
-                cout << "\n~~~ Data Mahasiswa ~~~" << endl;
-                cout << "Nama: " << daftarMhs[jumlahMhs].nama << endl;
-                cout << "NPM:  " << daftarMhs[jumlahMhs].npm << endl;
-        
-        jumlahMhs++; 
-    }else{
-        cout << "Data mahasiswa penuh!" << endl;
-    }
-    
-    }else if (pilih == 2){
-        if (jumlahMatkul < maks) {
-            cout << "Masukan matakuliah: ";
-            cin.getline(daftarMatkul[jumlahMatkul], 50);
-            cout << "Masukan SKS: ";
-            cin >> daftarSKS[jumlahMatkul];
+        while (true) {
+            cout << "\n=== Sistem Informasi Mahasiswa ===" << endl;
+            cout << "1. Daftar" << endl;
+            cout << "2. Tambahkan mata kuliah" << endl;
+            cout << "3. Tampilkan semua data" << endl;
+            cout << "4. Keluar" << endl;
+            cout << "Pilih : ";
+            cin >> pilih;
             cin.ignore();
-            // blok di atas itu  klo kta pilih 2 bakal keluar matkul apa yg mau kita ketik dan jumlah sks nya 
 
-            cout << "\n~~~ Data Matkul ~~~\n";
-            cout << "Mata kuliah : " << daftarMatkul[jumlahMatkul] << endl;
-            cout << "Jumlah SKS  : " << daftarSKS[jumlahMatkul] << endl;
-            // ini nti bkl kluar hasilny
-            
-            jumlahMatkul++;
-                } else {
-                    cout << "Data matkul penuh!" << endl; //kl matkul ud lebih dri 10 bakal ada pesan ini
-                }
+            if (pilih == 1) {
+                data mhs;
+                cout << "Masukan nama : ";
+                cin.getline(mhs.nama, 50);
+
+                cout << "Masukan npm : ";
+                cin >> mhs.npm;
+                cin.ignore();
+
+                daftarMhs.push_back(mhs);  //masukin 1 data mhs yg baru ke dlm daftarMhs
+
+                cout << "\n~~~ Data Mahasiswa ~~~" << endl;
+                cout << "Nama: " << mhs.nama << endl;
+                cout << "NPM:  " << mhs.npm << endl;
+
+            } else if (pilih == 2) {
+                char matkul[50];
+                int sks;
+
+                cout << "Masukan matakuliah: ";
+                cin.getline(matkul, 50);
+
+                cout << "Masukan SKS: ";
+                cin >> sks;
+                cin.ignore();
+
+                daftarMatkul.push_back(matkul);  
+                daftarSKS.push_back(sks);
+                // push_back tu buat nambah data ke belakang vector
+
+                cout << "\n~~~ Data Matkul ~~~\n";
+                cout << "Mata kuliah : " << matkul << endl;
+                cout << "Jumlah SKS  : " << sks << endl;
 
             } else if (pilih == 3) {
                 cout << "\n--- Semua Data Mahasiswa ---" << endl;
-                for (int i = 0; i < jumlahMhs; i++) {
-                    cout << i + 1 << ". Nama: " << daftarMhs[i].nama << ", NPM: " << daftarMhs[i].npm << endl;
+                for (int i = 0; i < daftarMhs.size(); i++) { // nampilin dta dri awal smpe akhir, klo gapke size() kita gak tau harus ulang berapa kali, karena jumlah datanya bisa berubah-ubah.
+                    cout << i + 1 << ". Nama: " << daftarMhs[i].nama // biar penomorannya dari 1 bukan 0
+                         << ", NPM: " << daftarMhs[i].npm << endl;
                 }
 
                 cout << "\n--- Semua Jadwal Mata Kuliah ---" << endl;
-                for (int i = 0; i < jumlahMatkul; i++) {
-                    cout << i + 1 << ". " << daftarMatkul[i] << " - SKS: " << daftarSKS[i] << endl;
+                for (int i = 0; i < daftarMatkul.size(); i++) { //sama
+                    cout << i + 1 << ". " << daftarMatkul[i] // sama
+                         << " - SKS: " << daftarSKS[i] << endl;
                 }
-                // kl kta pilih 3 bkal kluar data yg tdi kta isi, nama, npm, matkul, sks
 
             } else if (pilih == 4) {
                 cout << "Terima kasih.\n";
                 break;
-
             } else {
-                cout << "Error: Pilihan tidak valid." << endl; // kl kta ketik bkn 1-4 kluar tulisan begindang
+                cout << "Error: Pilihan tidak valid." << endl;
             }
         }
     }
@@ -113,5 +105,3 @@ int main() {
 
     return 0;
 }
-
-  
