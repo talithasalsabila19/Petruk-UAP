@@ -26,6 +26,7 @@ public:
 
 void menu(){
     int pilih;
+    while(true){
     
     cout << "=== Sistem Informasi Mahasiswa ===" << endl;
     cout << "1. Daftar" << endl;
@@ -55,6 +56,7 @@ void menu(){
     }
     
    }
+}
 };
 
 
