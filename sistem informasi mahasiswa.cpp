@@ -6,10 +6,10 @@ using namespace std;
 struct MataKuliah {
     char nama[50];
     int sks;
-int prioritas;
+    int prioritas;
 
-MataKuliah(const char* n = "", int s =0, int p = 0){
-strcpy(nama, n, sizeof(nama) - 1);
+MataKuliah(const char* n = "", int s = 0, int p = 0){
+    strncpy(nama, n, sizeof(nama) - 1);
 nama[sizeof(nama)-1]='\0';
 sks = s;
 prioritas = p;
@@ -23,26 +23,11 @@ class Matkul {
 public:
     vector<Mahasiswa*> daftarMhs;
     vector<Mahasiswa*> daftarMAtkul;
-    char n[50];
-    int sks;
-
-    void matakuliah() {
-        cout << "Masukan matakuliah: ";
-        cin.getline(n, 50);
-        cout << "Masukan SKS: ";
-        cin >> sks;
-        cin.ignore();
-
-        cout << "\n--- Data Matkul ---\n";
-        cout << "Mata kuliah : " << n << endl;
-        cout << "Jumlah SKS : " << sks << endl;
-    }
+   
 
     void menu() {
         int pilih;
-        vector<data> daftarMhs;            
-        vector<string> daftarMatkul;        
-        vector<int> daftarSKS;  
+       
         //pake vector biar gampang nyimpen data banyak. ya gaksih. gak ya
         
         while (true) {
@@ -74,7 +59,7 @@ public:
                 int sks, prioritas;
 
                 cout << "Masukan matakuliah: ";
-                cin.getline(matkul, 50);
+                cin.getline(nama, 50);
 
                 cout << "Masukan SKS: ";
                 cin >> sks;
@@ -102,30 +87,31 @@ public:
                         << " - Prioritas: " << daftarMatkul[i]->prioritas << endl;
                 }
 
-            } }else if (pilih == 4) {
+             }else if (pilih == 4) {
                 rekomendasiMatkul();
-            }}else if (pilih == 5){
+            }else if (pilih == 5){
                     cout << "Terimakasih.\n";
                 break;
-            } }else {
+             }else {
                 cout << "Error: Pilihan tidak valid." << endl;
         }
     }
-};
+}
 void rekomendasiMatkul(){
 int n = daftarMatkul.size():
 int kapasitasSKS;
 cout << "Masukkan batas maksimal SKS: ";
 cin >> kapasitasSKS;
 
-vector<vector<int>>dp(n+1,vector<int>(kapasitasSKS+1,00));
+vector<vector<int>>dp(n+1,vector<int>(kapasitasSKS + 1, 0));
 for (int i = 1; i<= n; ++i){
 int w = daftarMatkul[i-1]->sks;
 int v = daftarMatkul[i-1]->prioritas;
 for (int j = 0; j<=kapasitasSKS;++j){
 if(w<=j)
-dp[i][j]=max(dp[i-1[j],dp[i-1[j-w]+v);
-else dp[i][j] = dp[i-1][j];
+dp[i][j] = max(dp[i-1[j],dp[i-1[j-w]+v);
+else 
+    dp[i][j] = dp[i-1][j];
 }
 }
 cout << "\n >> total prioritas maksimal: " << dp[n] [kapasitasSKS]<< endl;
@@ -135,7 +121,8 @@ int j = kapasitasSKS;
 for (int i = n; i>0 && j > 0; --i){
 if (dp[i][j]!= dp [i-1][j]){
 MataKuliah* mk = daftarMatkul[i-1];
-cout << "- "<<mk->nama<<" (SKS: " << mk->sks<<",Prioritas: " << mk->prioritas << ")\n";
+cout << "- "<<mk->nama<<" (SKS: " << mk->sks
+    <<",Prioritas: " << mk->prioritas << ")\n";
 j-=mk->sks;
 }
 }
