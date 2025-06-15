@@ -23,13 +23,14 @@ class Matkul {
 public:
     vector<Mahasiswa*> daftarMhs;
     vector<Mahasiswa*> daftarMAtkul;
-   
+
+       ~Matkul() {
+        for (auto mhs : daftarMhs) delete mhs;
+        for (auto mk : daftarMatkul) delete mk;
+    }
 
     void menu() {
         int pilih;
-       
-        //pake vector biar gampang nyimpen data banyak. ya gaksih. gak ya
-        
         while (true) {
             cout << "\n=== Sistem Informasi Mahasiswa ===" << endl;
             cout << "1. Daftar Mahasigma" << endl;
@@ -87,13 +88,19 @@ public:
                         << " - Prioritas: " << daftarMatkul[i]->prioritas << endl;
                 }
 
-             }else if (pilih == 4) {
+            } else if (pilih == 4) {
                 rekomendasiMatkul();
-            }else if (pilih == 5){
-                    cout << "Terimakasih.\n";
+
+            } else if (pilih == 5) {
+                mergeSortMatkul(0, daftarMatkul.size() - 1);
+                cout << "Mata kuliah berhasil diurutkan berdasarkan prioritas tertinggi.\n";
+
+            } else if (pilih == 6) {
+                cout << "Terima kasih.\n";
                 break;
-             }else {
-                cout << "Error: Pilihan tidak valid." << endl;
+
+            } else {
+                cout << "Pilihan tidak valid.\n";
         }
     }
 }
@@ -127,6 +134,31 @@ j-=mk->sks;
 }
 }
 }
+
+    // === Merge Sort: Divide & Conquer berdasarkan PRIORITAS tertinggi ===
+    void mergeSortMatkul(int left, int right) {
+        if (left >= right) return;
+        int mid = (left + right) / 2;
+        mergeSortMatkul(left, mid);
+        mergeSortMatkul(mid + 1, right);
+        merge(left, mid, right);
+    }
+
+    void merge(int left, int mid, int right) {
+        vector<MataKuliah*> L(daftarMatkul.begin() + left, daftarMatkul.begin() + mid + 1);
+        vector<MataKuliah*> R(daftarMatkul.begin() + mid + 1, daftarMatkul.begin() + right + 1);
+
+        int i = 0, j = 0, k = left;
+        while (i < L.size() && j < R.size()) {
+            if (L[i]->prioritas >= R[j]->prioritas)
+                daftarMatkul[k++] = L[i++];
+            else
+                daftarMatkul[k++] = R[j++];
+        }
+
+        while (i < L.size()) daftarMatkul[k++] = L[i++];
+        while (j < R.size()) daftarMatkul[k++] = R[j++];
+    }
 };
 
 int main() {
